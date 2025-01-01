@@ -45,7 +45,7 @@ userRouter.post('/signup', async (c) => {
     });
 
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
-    return c.json({ message: 'User created successfully.', token });
+    return c.json({ token });
   } catch (error) {
     console.error('Error during signup:', error);
     c.status(500);
@@ -88,7 +88,9 @@ userRouter.post('/signin', async (c) => {
       }
   
       const token = await sign({ id: user.id }, c.env.JWT_SECRET);
-      return c.json({ message: 'Login successful.', token });
+      console.log(token);
+      return c.json({ token });
+      
     } catch (error) {
       console.error('Error during signin:', error);
       c.status(500);
