@@ -165,56 +165,6 @@ blogRouter.get('/:id', async(c) => {
     }
 });
 
-// blogRouter.delete('/:id', async (c) => {
-//     try {
-//       // Use Prisma client with Accelerate extension
-//       const prisma = new PrismaClient({
-//         datasourceUrl: c.env.DATABASE_URL,
-//       }).$extends(withAccelerate());
-  
-//       // Get the blog ID from the route parameter
-//       const id = Number(c.req.param('id'));
-  
-//       // Extract `authorId` from the request body (or token/session, if authentication is implemented)
-//       const { authorId } = await c.req.json();
-  
-//       if (isNaN(id)) {
-//         c.status(400);
-//         return c.json({ message: 'Invalid Blog ID: Not a number' });
-//       }
-  
-//       // Validate the input using deleteBlogInput schema
-//       const { success, error } = deleteBlogInput.safeParse({ id, authorId });
-  
-//       if (!success) {
-//         c.status(400);
-//         return c.json({ message: 'Invalid input', error });
-//       }
-  
-//       // Check if the blog exists
-//       const blog = await prisma.blog.findUnique({ where: { id } });
-  
-//       if (!blog) {
-//         c.status(404);
-//         return c.json({ message: 'Blog not found' });
-//       }
-  
-//       // Verify that the authorId matches the blog's authorId
-//       if (blog.authorId !== authorId) {
-//         c.status(403);
-//         return c.json({ message: 'You are not authorized to delete this blog' });
-//       }
-  
-//       // Delete the blog
-//       await prisma.blog.delete({ where: { id } });
-  
-//       return c.json({ message: 'Blog deleted successfully' });
-//     } catch (error) {
-//       console.error('Error deleting blog:', error);
-//       c.status(500);
-//       return c.json({ message: 'An error occurred during deletion' });
-//     }
-//   });
   
 blogRouter.delete('/:id', async (c) => {
     try {

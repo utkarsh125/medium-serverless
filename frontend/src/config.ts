@@ -1,0 +1,1 @@
+export const BACKEND_URL = "https://medium-serverless.utk2665.workers.dev"
