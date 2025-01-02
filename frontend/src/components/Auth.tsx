@@ -30,8 +30,9 @@ export const Auth: React.FC<AuthProps> = ({ type }) => {
     try {
       const endpoint = `/api/v1/user/${type}`;
       const response = await axios.post(`${BACKEND_URL}${endpoint}`, formData);
-      const token = response.data as string;
-      localStorage.setItem("token", token);
+      const token = response.data.token;
+      console.log(token);
+      localStorage.setItem("token", JSON.stringify(token));
       navigate("/blogs");
     } catch (error) {
       alert("Check your credentials");

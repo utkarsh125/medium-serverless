@@ -15,63 +15,68 @@ export const blogRouter = new Hono <{
     }
 }>();
 
-blogRouter.use("/*", async(c, next) =>{
+blogRouter.use('/publish', async (c, next) => {
+    const authHeader = c.req.header('authorization') || '';
 
-    const authHeader = c.req.header("authorization") || "";
-
-    try{
+    try {
         const user = await verify(authHeader, c.env.JWT_SECRET);
-        if(user){
+        if (user) {
+            // Attach user ID to context
             //@ts-ignore
             c.set('userId', user.id);
             await next();
-        }else{
+        } else {
             c.status(403);
-            return c.json({
-                message: "Failed to authenticate user",
-            });
+            return c.json({ message: 'Unauthorized: Invalid token' });
         }
-    }catch(error){
-        console.log("Error in blogRouter: ", error);
+    } catch (error) {
+        console.error('Authentication error:', error);
         c.status(403);
-        return c.json({
-            message: "You are not logged in"
-        });
+        return c.json({ message: 'Unauthorized: Authentication failed' });
     }
+});
+
+blogRouter.post("/publish", async(c) => {
+    const body = await c.req.json();
+    const authorId = c.get("userId");
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    const blog = await prisma.blog.create({
+      data: {
+        title: body.title,
+        content: body.content,
+        authorId: Number(authorId),
+        published: true
+      }
+    });
+  
+    return c.json({
+      id: blog.id
+    });
 });
 
 blogRouter.post("/", async(c) => {
-    //always use accelerate in each route
-
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate());
-
-    //Create new Blog
-
     const body = await c.req.json();
-
-    const {success} = createBlogInput.safeParse(body);
-
-    if(!success){
-        c.status(411);
-        return c.json({
-            message: "Invalid Input"
-        })
-    }
-
-    const userId = c.get('userId');
+    const authorId = c.get("userId");
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
     const blog = await prisma.blog.create({
-        data: {
-            title: body.title,
-            content: body.content,
-            authorId: Number(userId) //HARDCODED: CHANGE IT
-        }
+      data: {
+          title: body.title,
+          content: body.content,
+          authorId: Number(authorId)
+      }
     })
+  
     return c.json({
-        id: blog.id
+      id: blog.id
     })
-});
+  });
+
 
 blogRouter.put('/', async(c) => {
     //always use prisma client

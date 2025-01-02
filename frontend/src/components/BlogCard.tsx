@@ -1,64 +1,84 @@
 import { Link } from "react-router-dom";
+import React from 'react';
 
 interface BlogCardProps {
-    id: number;
-    authorName: string;
-    title: string;
-    content: string;
-    createdAt: string;
+  id: number;
+  authorName: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  tags?: string[];
+  readTime?: number;
 }
 
 export const BlogCard: React.FC<BlogCardProps> = ({
-    id,
-    authorName,
-    title,
-    content,
-    createdAt,
+  id,
+  authorName,
+  title,
+  content,
+  createdAt,
+  tags = [],
+  readTime
 }) => {
-    return (
-        <Link to={`/blog/${id}`}>
-            <div className="p-4 font-poppins border-b border-slate-200 pb-4 w-screen max-w-screen-lg cursor-pointer">
-                <div className="flex items-center space-x-2">
-                    <div className="flex justify-center flex-col">
-                        <Avatar name={authorName} size={8} />
-                    </div>
-                    <div className="font-medium text-sm text-black pl-2">{authorName}</div>
-                    <div className="flex justify-center flex-col pl-2">
-                        <Circle />
-                    </div>
-                    <div className="pl-2 text-sm text-slate-500 font-light">
-                        {new Date(createdAt).toDateString()}
-                    </div>
-                </div>
-
-                <div className="font-bold text-2xl mt-2">{title}</div>
-
-                <div className="text-md font-light mt-1 text-gray-700">
-                    {content.slice(0, 100) + "..."}
-                </div>
-
-                <div className="w-full text-slate-500 text-sm font-light mt-1">{`${Math.ceil(
-                    content.length / 100
-                )} minute(s)`}</div>
+  return (
+    <div className="w-full flex justify-center mb-8">
+      <Link to={`/blog/${id}`} className="min-w-[350px] w-[95vw] lg:w-[1200px]">
+        <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 p-0.5 transition-all hover:scale-[1.01]">
+          <div className="relative bg-white p-8 rounded-xl min-h-[200px]">
+            {/* Tags and Read Time */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-4 py-1.5 text-sm bg-gray-100 rounded-full text-gray-600 hover:bg-gray-200 transition-colors"
+                >
+                  {tag}
+                </span>
+              ))}
+              {readTime && (
+                <span className="px-4 py-1.5 text-sm bg-gray-100 rounded-full text-gray-600">
+                  {readTime} min read
+                </span>
+              )}
             </div>
-        </Link>
-    );
+
+            {/* Title */}
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors">
+              {title}
+            </h2>
+
+            {/* Content Preview */}
+            <p className="text-gray-600 mb-6 line-clamp-3 text-lg">
+              {content}
+            </p>
+
+            {/* Author and Date */}
+            <div className="flex items-center space-x-4">
+              <Avatar name={authorName} />
+              <div>
+                <div className="font-medium text-gray-900 text-lg">{authorName}</div>
+                <div className="text-sm text-gray-500">
+                  {new Date(createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
 };
 
-function Circle() {
-    return <div className="h-2 w-2 rounded-full bg-slate-500"></div>;
-}
-
-export function Avatar({ name, size = 8 }: { name: string; size: number }) {
-    const sizeClass = `w-${size} h-${size}`;
-
-    return (
-        <div
-            className={`relative inline-flex items-center justify-center overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ${sizeClass}`}
-        >
-            <span className="font-medium text-gray-600 dark:text-gray-300 text-sm">
-                {name[0].toUpperCase()}
-            </span>
-        </div>
-    );
-}
+export const Avatar = ({ name }: { name: string }) => {
+  return (
+    <div className="w-[48px] h-[48px] relative inline-flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 rounded-full">
+      <span className="font-medium text-white text-base">
+        {name[0].toUpperCase()}
+      </span>
+    </div>
+  );
+};

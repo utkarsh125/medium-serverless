@@ -1,7 +1,8 @@
+import { sign, verify } from 'hono/jwt';
+
 import { Hono } from 'hono';
 import { PrismaClient } from '@prisma/client/edge';
 import bcrypt from 'bcryptjs';
-import { sign } from 'hono/jwt';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 export const userRouter = new Hono<{
@@ -69,7 +70,7 @@ userRouter.post('/signin', async (c) => {
       }
   
       const user = await prisma.user.findUnique({ where: { username } });
-  
+      console.log(user);
       if (!user) {
         c.status(401);
         return c.json({ message: 'Invalid credentials.' });
@@ -96,6 +97,8 @@ userRouter.post('/signin', async (c) => {
       c.status(500);
       return c.json({ message: 'An error occurred during signin.' });
     }
+
+    
   });
 
 // Delete User Route
@@ -166,3 +169,55 @@ userRouter.delete('/delete', async (c) => {
     }
   });
   
+
+  // userRouter.get('/me', async(c) => {
+
+  //   const authHeader = c.req.header('authorization') || '';
+
+  //   try{
+  //     const user = await verify(authHeader, c.env.JWT_SECRET);
+  //     const prisma = new PrismaClient({
+  //       datasourceUrl: c.env.DATABASE_URL,
+
+  //     }).$extends(withAccelerate());
+
+  //     const userDetails = await prisma.user.findUnique({
+  //       where:{
+  //         id: Number(user.id),
+  //       },
+  //       select: {
+  //         name: true,
+  //       }
+  //     });
+
+  //     return c.json({name: userDetails?.name});
+
+
+  //   } catch(error){
+  //     console.log("Error while fetching userName: ", error);
+  //     c.status(403);
+  //     return c.json({message: "Not Authorized"});
+  //   }
+  // })
+
+  // In routes/user.ts
+userRouter.get('/me', async(c) => {
+  const authHeader = c.req.header('authorization') || '';
+  
+  try {
+    const user = await verify(authHeader, c.env.JWT_SECRET);
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const userDetails = await prisma.user.findUnique({
+      where: { id: Number(user.id) },
+      select: { name: true }
+    });
+
+    return c.json({ name: userDetails?.name });
+  } catch (error) {
+    c.status(403);
+    return c.json({ message: 'Unauthorized' });
+  }
+});

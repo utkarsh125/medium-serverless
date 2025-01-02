@@ -19,7 +19,7 @@ export const Blogs = () => {
     return (
         <div>
             <Appbar />
-            <div className="flex justify-center p-4 border-b border-slate-200">
+            <div className="flex justify-center mt-5 border-slate-200 mx-5">
                 <div>
                     {blogs.map((blog) => (
                         <BlogCard
