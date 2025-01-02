@@ -23,10 +23,10 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
 
             {/* Author info - mobile */}
             <div className="lg:hidden flex items-center space-x-3 mb-6">
-              <Avatar size={8} name={blog.author.name || "Anonymous"} />
+              <Avatar name={blog.author?.name || "Anonymous"} />
               <div>
                 <div className="font-semibold text-gray-900">
-                  {blog.author.name || "Anonymous"}
+                  {blog.author?.name || "Anonymous"}
                 </div>
                 <div className="text-sm text-gray-500">
                   {publishDate} · {Math.ceil(blog.content.length / 1000)} min read
@@ -49,10 +49,10 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
             <div className="sticky top-24">
               <div className="bg-white p-6 rounded-lg">
                 <div className="flex items-center space-x-4 mb-4">
-                  <Avatar size={16} name={blog.author.name || "Anonymous"} />
+                  <Avatar name={blog.author?.name || "Anonymous"} />
                   <div>
                     <div className="font-semibold text-xl text-gray-900">
-                      {blog.author.name || "Anonymous"}
+                      {blog.author?.name || "Anonymous"}
                     </div>
                     <div className="text-sm text-gray-500">
                       {Math.ceil(blog.content.length / 1000)} min read

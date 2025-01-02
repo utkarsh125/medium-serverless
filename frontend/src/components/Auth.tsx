@@ -10,6 +10,10 @@ interface AuthProps {
   type: "signin" | "signup";
 }
 
+interface AuthResponse {
+  token: string;
+}
+
 export const Auth: React.FC<AuthProps> = ({ type }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -30,7 +34,7 @@ export const Auth: React.FC<AuthProps> = ({ type }) => {
     try {
       const endpoint = `/api/v1/user/${type}`;
       const response = await axios.post(`${BACKEND_URL}${endpoint}`, formData);
-      const token = response.data.token;
+      const token = (response.data as AuthResponse).token;
       console.log(token);
       localStorage.setItem("token", JSON.stringify(token));
       navigate("/blogs");
