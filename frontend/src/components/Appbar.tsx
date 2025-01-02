@@ -36,7 +36,7 @@ export const Appbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center px-8 py-4 bg-black border-b border-gray-800">
+    <div className="flex font-lora justify-between items-center px-8 py-4 bg-black border-b border-gray-800">
       <Link to="/blogs" className="flex items-center space-x-2">
         <div className="text-2xl font-bold text-white">slothBlog</div>
       </Link>

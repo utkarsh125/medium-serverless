@@ -10,14 +10,14 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen font-roboto bg-white">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main content container */}
         <div className="grid grid-cols-12 gap-8 py-12">
           {/* Article content */}
           <div className="col-span-12 lg:col-span-8">
             {/* Title */}
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
+            <h1 className="text-4xl font-lora font-bold tracking-tight text-gray-900 mb-4">
               {blog.title}
             </h1>
 

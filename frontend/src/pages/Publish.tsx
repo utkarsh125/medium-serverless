@@ -41,7 +41,7 @@ export const Publish = () => {
             <div className="flex justify-center w-full pt-8">
                 <div className="max-w-screen-lg w-full px-4">
                     <div className="relative flex items-center mb-4">
-                        <div className="text-purple-500 text-4xl font-bold mr-4">+</div>
+                        <div className="text-purple-500 text-4xl font-lora font-bold mr-4">+</div>
                         <input 
                             onChange={(e) => setTitle(e.target.value)}
                             type="text" 
@@ -66,7 +66,7 @@ export const Publish = () => {
 
 function TextEditor({ onChange }: {onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void}) {
     return (
-        <div className="mt-2">
+        <div className="mt-2 font-roboto">
             <div className="w-full mb-4">
                 <div className="flex items-center justify-between">
                     <div className="my-2 w-full">
