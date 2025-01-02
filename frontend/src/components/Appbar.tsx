@@ -37,7 +37,7 @@ export const Appbar = () => {
 
   return (
     <div className="flex justify-between items-center px-8 py-4 bg-black border-b border-gray-800">
-      <Link to="/blog/bulk" className="flex items-center space-x-2">
+      <Link to="/blogs" className="flex items-center space-x-2">
         <div className="text-2xl font-bold text-white">slothBlog</div>
       </Link>
       <div className="flex items-center space-x-6">

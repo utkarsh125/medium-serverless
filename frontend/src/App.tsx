@@ -21,6 +21,14 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />  {/* Add route for all blogs */}
           <Route path="/blog/:id" element={<Blog/>} />    {/*Use Blog component for single blog*/}
           <Route path='/publish' element={<Publish />}/>
+
+          //TODO: Protect Publish Route properly.
+          {/* <Route path='/publish' element={
+            <ProtectedPage>
+              <Publish />
+            </ProtectedPage>
+          } */}
+          {/* /> */}
         </Routes>
 
       </BrowserRouter>

@@ -21,7 +21,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
   readTime
 }) => {
   return (
-    <div className="w-full flex justify-center mb-8">
+    <div className="w-full flex font-roboto justify-center mb-8">
       <Link to={`/blog/${id}`} className="min-w-[350px] w-[95vw] lg:w-[1200px]">
         <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 p-0.5 transition-all hover:scale-[1.01]">
           <div className="relative bg-white p-8 rounded-xl min-h-[200px]">
@@ -43,7 +43,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
             </div>
 
             {/* Title */}
-            <h2 className="text-3xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors">
+            <h2 className="text-3xl font-lora font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors">
               {title}
             </h2>
 

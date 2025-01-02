@@ -50,8 +50,8 @@ export const Auth: React.FC<AuthProps> = ({ type }) => {
     <div className="flex h-screen">
       {/* Left side with gradient */}
       <div className="hidden md:flex md:w-1/2 bg-gradient-to-b from-purple-500 to-purple-900 p-12 flex-col justify-between">
-        <div className="text-white text-2xl font-bold">slothblog.</div>
-        <div className="text-white text-5xl font-bold leading-tight">
+        <div className="text-white text-2xl font-bold font-lora">slothblog.</div>
+        <div className="text-white font-roboto text-5xl font-bold leading-tight">
           Welcome to the era
           <br />
           of lazy knowledge 🤖
@@ -59,7 +59,7 @@ export const Auth: React.FC<AuthProps> = ({ type }) => {
       </div>
 
       {/* Right side with form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-black p-8">
+      <div className="w-full md:w-1/2 flex font-roboto items-center justify-center bg-black p-8">
         <div className="w-full max-w-md">
           {/* <h2 className="text-2xl font-semibold text-white mb-2">
             Sign Up For Free.
