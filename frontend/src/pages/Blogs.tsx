@@ -1,5 +1,6 @@
 import { Appbar } from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard";
+import Skeleton from "../components/Skeleton";
 import { useBlogs } from "../hooks";
 
 export const Blogs = () => {
@@ -9,8 +10,17 @@ export const Blogs = () => {
         return (
             <div>
                 <Appbar />
-                <div className="mt-5">
-                    <div>Loading...</div>
+                <div className="mt-5 mx-5">
+                    <div>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        
+                    </div>
                 </div>
             </div>
         );
